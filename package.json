@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
-    "build": "node esbuild.js"
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js dev"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
   },
   "homepage": "https://github.com/mwpb/cyclex#readme",
   "devDependencies": {
-    "esbuild": "^0.14.2"
+    "@types/netlify-identity-widget": "^1.9.2",
+    "esbuild": "^0.14.2",
+    "netlify-identity-widget": "^1.9.2"
   }
 }
