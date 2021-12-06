@@ -1,0 +1,23 @@
+{
+  "name": "cyclex",
+  "version": "0.0.1",
+  "description": "Cycle tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwpb/cyclex.git"
+  },
+  "keywords": [
+    "cycle",
+    "tracker"
+  ],
+  "author": "Matthew Burke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwpb/cyclex/issues"
+  },
+  "homepage": "https://github.com/mwpb/cyclex#readme"
+}
