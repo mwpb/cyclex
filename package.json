@@ -23,8 +23,19 @@
   },
   "homepage": "https://github.com/mwpb/cyclex#readme",
   "devDependencies": {
+    "@types/mithril": "^2.0.8",
     "@types/netlify-identity-widget": "^1.9.2",
     "esbuild": "^0.14.2",
+    "mithril": "^2.0.4",
     "netlify-identity-widget": "^1.9.2"
+  },
+  "dependencies": {
+    "@netlify/functions": "^0.10.0",
+    "runtypes": "^6.5.0",
+    "typescript": "^4.5.2",
+    "workbox-cacheable-response": "^6.4.2",
+    "workbox-expiration": "^6.4.2",
+    "workbox-routing": "^6.4.2",
+    "workbox-strategies": "^6.4.2"
   }
 }
