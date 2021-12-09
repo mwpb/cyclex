@@ -1,19 +1,31 @@
 import { EventData } from "../../data/Event";
-import { localDb } from "../rxdb/initRxdb";
+import { localDb } from "../state/initRxdb";
 
-export class UpsertEventWidget {
+export class UpsertEventModal {
   private element: HTMLElement;
 
   constructor(event: EventData) {
     // Elements
     let element = document.createElement("div");
+    element.style.display = "flex";
+    element.style.justifyContent = "center";
     element.style.position = "fixed";
-    element.style.left = "50%";
-    element.style.top = "50%";
-    element.style.maxHeight = "95vh";
-    element.style.maxWidth = "95vw";
-    element.style.width = "300px";
-    element.style.height = "400px";
+    element.style.left = "0";
+    element.style.top = "0";
+    element.style.width = "100%";
+    element.style.height = "100%";
+    element.style.backgroundColor = "rgba(108,122,137,0.5)";
+    element.style.zIndex = "98";
+
+    let column = document.createElement("div");
+    column.style.display = "flex";
+    column.style.flexDirection = "column";
+    column.style.justifyContent = "center";
+
+    let content = document.createElement("div");
+    content.style.display = "flex";
+    content.style.flexDirection = "column";
+    content.style.zIndex = "99";
 
     let dateInput = document.createElement("input");
     dateInput.type = "date";
@@ -48,16 +60,19 @@ export class UpsertEventWidget {
     descriptionInput.appendChild(heavyOption);
     descriptionInput.value = event.description;
 
-    element.appendChild(dateInput);
-    element.appendChild(timeInput);
-    element.appendChild(descriptionInput);
-    element.appendChild(cancelButton);
-    element.appendChild(submitButton);
+    content.appendChild(dateInput);
+    content.appendChild(timeInput);
+    content.appendChild(descriptionInput);
+    content.appendChild(cancelButton);
+    content.appendChild(submitButton);
+
+    column.appendChild(content);
+    element.appendChild(column);
 
     // Events
-    cancelButton.onclick = () => {
-      element.outerHTML = "";
-    };
+    cancelButton.onclick = (e) => this.destroy(e, cancelButton);
+    column.onclick = (e) => this.destroy(e, column);
+    element.onclick = (e) => this.destroy(e, element);
 
     submitButton.onclick = async () => {
       feedbackDiv.innerText = "";
@@ -84,7 +99,12 @@ export class UpsertEventWidget {
 
     this.element = element;
   }
+
   getElement(): HTMLElement {
     return this.element;
+  }
+
+  destroy(e: Event, ele: HTMLElement): void {
+    if (e.target === ele) this.element.outerHTML = "";
   }
 }

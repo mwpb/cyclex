@@ -1,6 +1,6 @@
 import { EventData } from "../../data/Event";
-import { localDb } from "../rxdb/initRxdb";
-import { UpsertEventWidget } from "./UpsertEventWidget";
+import { localDb } from "../state/initRxdb";
+import { UpsertEventModal } from "./UpsertEventWidget";
 
 export class EventListItem {
   private element: HTMLElement;
@@ -29,7 +29,7 @@ export class EventListItem {
 
     // Events
     editButton.onclick = () => {
-      let upsertEvent = new UpsertEventWidget(event);
+      let upsertEvent = new UpsertEventModal(event);
       document.body.appendChild(upsertEvent.getElement());
     };
 
