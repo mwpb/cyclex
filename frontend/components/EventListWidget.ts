@@ -1,8 +1,9 @@
 import { newEvent } from "../../data/Event";
 import { localDb } from "../rxdb/initRxdb";
+import { EventListItem } from "./EventListItem";
 import { UpsertEventWidget } from "./UpsertEventWidget";
 
-export class ListEventWidget {
+export class EventListWidget {
   private element: HTMLElement;
 
   constructor() {
@@ -29,7 +30,10 @@ export class ListEventWidget {
       .find()
       .sort("date")
       .$.subscribe((events) => {
-        listDiv.innerText = JSON.stringify(events);
+        listDiv.innerHTML = "";
+        for (let event of events) {
+          listDiv.appendChild(new EventListItem(event).getElement());
+        }
       });
 
     this.element = element;

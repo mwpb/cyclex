@@ -1,11 +1,11 @@
-import { ListEventWidget } from "./ListEventWidget";
+import { EventListWidget } from "./EventListWidget";
 
 export class AppHome {
   private element: HTMLElement;
 
   constructor() {
     let element = document.createElement("div");
-    let listEventWidget = new ListEventWidget();
+    let listEventWidget = new EventListWidget();
 
     element.appendChild(listEventWidget.getElement());
 
