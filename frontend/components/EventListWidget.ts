@@ -11,19 +11,8 @@ export class EventListWidget {
 
     let listDiv = document.createElement("div");
 
-    let newEventButton = document.createElement("button");
-    newEventButton.innerText = "New event";
-
     // Structure
     element.appendChild(listDiv);
-    element.appendChild(newEventButton);
-
-    // Events
-    newEventButton.onclick = () => {
-      let event = newEvent("test_username", "test_uuid");
-      let upsertEventWidget = new UpsertEventModal(event);
-      document.body.appendChild(upsertEventWidget.getElement());
-    };
 
     // Subscriptions
     localDb.events
