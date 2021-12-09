@@ -10,15 +10,17 @@ export class TabBar {
     let element = document.createElement("div");
     element.style.display = "flex";
     element.style.justifyContent = "space-evenly";
+    element.style.alignItems = "center";
     element.style.height = "10vh";
+    element.style.borderTop = "1px solid silver";
 
-    let listButton = document.createElement("button");
+    let listButton = document.createElement("a");
     listButton.innerText = "List";
-    let calendarButton = document.createElement("button");
+    let calendarButton = document.createElement("a");
     calendarButton.innerText = "Calendar";
-    let settingsButton = document.createElement("button");
+    let settingsButton = document.createElement("a");
     settingsButton.innerText = "Settings";
-    let newEventButton = document.createElement("button");
+    let newEventButton = document.createElement("a");
     newEventButton.innerText = "New event";
 
     // Structure
@@ -28,16 +30,9 @@ export class TabBar {
     element.appendChild(newEventButton);
 
     // Events
-    listButton.onclick = () => {
-      page$.next("list");
-    };
-    calendarButton.onclick = () => {
-      page$.next("calendar");
-    };
-    settingsButton.onclick = () => {
-      page$.next("settings");
-    };
-
+    listButton.onclick = () => page$.next("list");
+    calendarButton.onclick = () => page$.next("calendar");
+    settingsButton.onclick = () => page$.next("settings");
     newEventButton.onclick = () => {
       let event = newEvent("test_username", "test_uuid");
       let upsertEventWidget = new UpsertEventModal(event);

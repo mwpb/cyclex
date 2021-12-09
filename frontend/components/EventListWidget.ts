@@ -1,6 +1,7 @@
 import { newEvent } from "../../data/Event";
 import { localDb } from "../state/initRxdb";
 import { EventListItem } from "./EventListItem";
+import { PredicationWidget } from "./PredictionWidget";
 import { UpsertEventModal } from "./UpsertEventWidget";
 
 export class EventListWidget {
@@ -10,9 +11,11 @@ export class EventListWidget {
     let element = document.createElement("div");
 
     let listDiv = document.createElement("div");
+    let predictionWidget = new PredicationWidget();
 
     // Structure
     element.appendChild(listDiv);
+    element.appendChild(predictionWidget.getElement());
 
     // Subscriptions
     localDb.events
