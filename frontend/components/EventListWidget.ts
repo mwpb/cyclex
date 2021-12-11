@@ -8,7 +8,7 @@ export class EventListWidget {
 
   constructor() {
     let element = document.createElement("ul");
-    element.style.height = "80vh";
+    element.style.height = "70vh";
     element.style.overflowY = "scroll";
     element.style.backgroundColor = "lightgrey"
 

@@ -18,10 +18,14 @@ export class AppHome {
     let listEventWidget = new EventListWidget();
     let predictionWidget = new PredicationWidget();
     let tabBar = new TabBar();
+    let dummyBottom = document.createElement("div");
+    dummyBottom.style.backgroundColor = "black";
+    dummyBottom.style.height = "10vh";
 
     element.appendChild(listEventWidget.getElement());
     element.appendChild(predictionWidget.getElement());
     element.appendChild(tabBar.getElement());
+    element.appendChild(dummyBottom);
 
     this.element = element;
   }
