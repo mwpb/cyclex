@@ -10,6 +10,7 @@ export class PredicationWidget {
     element.className =
       "d-flex justify-content-center align-items-center border-top";
     element.style.height = "10vh";
+    element.style.backgroundColor = "lightgreen";
 
     let predictionStatement = document.createElement("div");
     predictionStatement.innerText = "None";

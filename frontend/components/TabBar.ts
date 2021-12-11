@@ -13,6 +13,8 @@ export class TabBar {
     element.style.alignItems = "center";
     element.style.height = "10vh";
     element.style.borderTop = "1px solid silver";
+    element.style.backgroundColor = "black";
+    element.style.color = "white";
 
     let listButton = document.createElement("a");
     listButton.innerText = "List";

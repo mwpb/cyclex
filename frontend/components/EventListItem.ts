@@ -14,12 +14,12 @@ export class EventListItem {
     let summary = document.createElement("div");
     summary.innerText = `${event.date} ${event.time} (${event.description})`;
 
-    let buttonsDiv = document.createElement("div");
-    buttonsDiv.className = "d-flex align-items-center";
+    let leftDiv = document.createElement("div");
+    leftDiv.className = "d-flex align-items-center";
 
     let editButton = document.createElement("button");
     editButton.type = "button";
-    editButton.className = "btn btn-outline-primary";
+    editButton.className = "btn btn-primary";
     editButton.innerText = "Edit event";
 
     // let deleteButton = document.createElement("button");
@@ -40,11 +40,11 @@ export class EventListItem {
 
     // Structure
     // deleteButton.appendChild(deleteButton);
-    buttonsDiv.appendChild(editButton);
-    buttonsDiv.appendChild(deleteButton);
+    leftDiv.appendChild(deleteButton);
+    leftDiv.appendChild(summary);
 
-    element.appendChild(summary);
-    element.appendChild(buttonsDiv);
+    element.appendChild(leftDiv);
+    element.appendChild(editButton);
 
     // Events
     editButton.onclick = () => {
