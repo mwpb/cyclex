@@ -2,29 +2,31 @@ import { newEvent } from "../../data/Event";
 import { localDb } from "../state/initRxdb";
 import { EventListItem } from "./EventListItem";
 import { PredicationWidget } from "./PredictionWidget";
-import { UpsertEventModal } from "./UpsertEventWidget";
 
 export class EventListWidget {
   private element: HTMLElement;
 
   constructor() {
-    let element = document.createElement("div");
+    let element = document.createElement("ul");
+    element.style.height = "80vh";
+    element.style.overflowY = "scroll";
+    element.style.backgroundColor = "lightgrey"
 
-    let listDiv = document.createElement("div");
-    let predictionWidget = new PredicationWidget();
+    // let listDiv = document.createElement("ul");
+    element.className = "list-group p-3";
 
     // Structure
-    element.appendChild(listDiv);
-    element.appendChild(predictionWidget.getElement());
+    // element.appendChild(listDiv);
+    
 
     // Subscriptions
     localDb.events
       .find()
       .sort("date")
       .$.subscribe((events) => {
-        listDiv.innerHTML = "";
+        element.innerHTML = "";
         for (let event of events) {
-          listDiv.appendChild(new EventListItem(event).getElement());
+          element.appendChild(new EventListItem(event).getElement());
         }
       });
 

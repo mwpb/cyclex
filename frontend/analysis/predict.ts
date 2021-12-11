@@ -1,8 +1,8 @@
 import moment from "moment";
+import { EventData } from "../../data/Event";
 import { localDb } from "../state/initRxdb";
 
-export let predictNext = async (): Promise<[string, string]> => {
-  let events = await localDb.events.find().sort("date").exec();
+export let predictNext = (events: EventData[]): [string, string] => {
   let gaps: number[] = [];
   let format = "YYYY-MM-DDTHH:mm";
 
@@ -17,11 +17,21 @@ export let predictNext = async (): Promise<[string, string]> => {
   let sum = gaps.reduce((a, b) => a + b, 0);
   let mean = sum / gaps.length;
 
-  let lastEvent = events[events.length - 1];
-  let lastTs = moment(`${lastEvent.date}T${lastEvent.time}`, format).valueOf();
-  let predictedTs = lastTs + mean;
+  if (mean === 0 || !Number.isFinite(mean)) {
+    mean = 1000 * 60 * 60 * 24 * 28;
+  }
 
+  let lastEvent = events[events.length - 1];
+  let lastTs = moment().valueOf();
+  if (lastEvent) {
+    lastTs = moment(`${lastEvent.date}T${lastEvent.time}`, format).valueOf();
+  }
+
+  let predictedTs = lastTs + mean;
   let predictedMoment = moment(predictedTs);
+
+  console.log(gaps);
+
   return [
     predictedMoment.format("YYYY-MM-DD"),
     predictedMoment.format("HH:mm"),

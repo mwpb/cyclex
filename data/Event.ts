@@ -11,7 +11,7 @@ export let eventSchema = Record({
 
 export type EventData = Static<typeof eventSchema>;
 
-export let newEvent = (username: string, uuid: string): EventData => {
+export let newEvent = (): EventData => {
   let now = moment();
   return {
     date: now.format("YYYY-MM-DD"),

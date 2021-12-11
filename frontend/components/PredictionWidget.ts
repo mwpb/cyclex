@@ -1,4 +1,5 @@
 import { predictNext } from "../analysis/predict";
+import { localDb } from "../state/initRxdb";
 
 export class PredicationWidget {
   private element: HTMLElement;
@@ -6,23 +7,25 @@ export class PredicationWidget {
   constructor() {
     // Elements
     let element = document.createElement("div");
+    element.className =
+      "d-flex justify-content-center align-items-center border-top";
+    element.style.height = "10vh";
 
     let predictionStatement = document.createElement("div");
     predictionStatement.innerText = "None";
 
-    let refreshPrediction = document.createElement("button");
-    refreshPrediction.innerText = "Refresh prediction";
-
     // Structure
     element.appendChild(predictionStatement);
-    element.appendChild(refreshPrediction);
 
-    // Events
-    refreshPrediction.onclick = async () => {
-      let [nextDate, nextTime] = await predictNext();
-      predictionStatement.innerText = `Predicted next: ${nextDate} ${nextTime}`;
-    };
+    // Subscriptions
 
+    localDb.events
+      .find()
+      .sort("date")
+      .$.subscribe((events) => {
+        let [nextDate, nextTime] = predictNext(events);
+        predictionStatement.innerText = `Predicted next: ${nextDate} ${nextTime}`;
+      });
     this.element = element;
   }
 

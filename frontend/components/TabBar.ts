@@ -1,6 +1,6 @@
 import { newEvent } from "../../data/Event";
-import { page$ } from "../state/state";
-import { UpsertEventModal } from "./UpsertEventWidget";
+import { upsertEventModal } from "../app";
+import { page$, setUpsertEventData } from "../state/state";
 
 export class TabBar {
   private element: HTMLElement;
@@ -34,9 +34,7 @@ export class TabBar {
     calendarButton.onclick = () => page$.next("calendar");
     settingsButton.onclick = () => page$.next("settings");
     newEventButton.onclick = () => {
-      let event = newEvent("test_username", "test_uuid");
-      let upsertEventWidget = new UpsertEventModal(event);
-      document.body.appendChild(upsertEventWidget.getElement());
+      setUpsertEventData(newEvent(), true);
     };
 
     this.element = element;
