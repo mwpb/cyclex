@@ -6,6 +6,8 @@ import {
   Number,
   String,
   Union,
+  Undefined,
+  Optional,
 } from "runtypes";
 
 export const rpcResultSchema = Record({
@@ -27,9 +29,17 @@ export const rpcErrorSchema = Record({
 
 export const rpcResponseSchema = Union(rpcResultSchema, rpcErrorSchema);
 
+export const rpcRequestSchema = Record({
+  jsonrpc: Literal("2.0"),
+  method: String,
+  params: Optional(Unknown),
+  id: Literal(-1),
+});
+
 export type RpcResult = Static<typeof rpcResultSchema>;
 export type RpcError = Static<typeof rpcErrorSchema>;
 export type RpcResponse = Static<typeof rpcResponseSchema>;
+export type RpcRequest = Static<typeof rpcRequestSchema>;
 
 export let createError = (
   code: number,
@@ -63,5 +73,12 @@ export let createResult = (result: any): RpcResult => {
     jsonrpc: "2.0",
     result: result,
     id: -1,
+  };
+};
+
+export let apiRepsonse = (rpcResponse: RpcResponse) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify(rpcResponse),
   };
 };

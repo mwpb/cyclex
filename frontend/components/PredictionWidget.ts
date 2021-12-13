@@ -1,7 +1,7 @@
 import { newEvent } from "../../data/Event";
 import { predictNext } from "../analysis/predict";
 import { localDb } from "../state/initRxdb";
-import { meanGap$, setUpsertEventData } from "../state/state";
+import { email$, meanGap$, setUpsertEventData } from "../state/state";
 
 export class PredicationWidget {
   private element: HTMLElement;
@@ -64,7 +64,7 @@ export class PredicationWidget {
     // Events
 
     newEventButton.onclick = () => {
-      setUpsertEventData(newEvent(), true);
+      setUpsertEventData(newEvent(email$.value), true);
     };
 
     // Subscriptions

@@ -23,7 +23,10 @@ export let eventsRxJsonSchema: RxJsonSchema<EventData> = {
       type: "string",
       default: "Normal",
     },
+    email: {
+      type: "string",
+    },
   },
-  required: ["created_at", "updated_at", "date", "time"],
+  required: ["created_at", "updated_at", "date", "time", "email"],
   indexes: ["date"],
 };

@@ -1,9 +1,50 @@
 import { Handler } from "@netlify/functions";
+import { Client } from "faunadb";
+import { Array } from "runtypes";
+import { eventDataSchema } from "../data/Event";
+import {
+  apiRepsonse,
+  createError,
+  rpcRequestSchema,
+  RpcResponse,
+  serverError,
+} from "../data/RpcData";
+import { setEvents } from "./apiFunctions/setEvents";
+import { authenticate } from "./utils/authenticate";
+import { faunaSecret } from "./utils/variables";
 
 const handler: Handler = async (event, context) => {
+  let client = new Client({
+    secret: faunaSecret,
+  });
+
+  let email = authenticate(client, event);
+  if (!email) return apiRepsonse(serverError("Invalid credentials"));
+
+  let rpcRequest;
+  try {
+    rpcRequest = rpcRequestSchema.check(JSON.parse(event.body ?? "null"));
+  } catch (err) {
+    console.log(err);
+    return apiRepsonse(createError(-32600, "Invalid Request"));
+  }
+
+  let rpcResponse: RpcResponse;
+  if (rpcRequest.method === "setEvents") {
+    try {
+      let events = Array(eventDataSchema).check(rpcRequest.params);
+      rpcResponse = await setEvents(client, events);
+    } catch (err) {
+      console.log(err);
+      return apiRepsonse(createError(-32602, "Invalid params"));
+    }
+  } else {
+    return apiRepsonse(createError(-32601, "Method not found"));
+  }
+
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "HI" }),
+    body: JSON.stringify(rpcResponse),
   };
 };
 export { handler };

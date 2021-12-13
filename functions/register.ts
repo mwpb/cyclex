@@ -2,7 +2,7 @@ import { Handler } from "@netlify/functions";
 import { parse } from "querystring";
 import { registerSchema } from "../data/Forms";
 import faunadb from "faunadb";
-import { faunaSecret } from "./variables";
+import { faunaSecret } from "./utils/variables";
 const handler: Handler = async (event, context) => {
   let details;
   try {

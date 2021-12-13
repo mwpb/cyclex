@@ -1,8 +1,5 @@
-import { upsertEventModal } from "../app";
 import { EventListWidget } from "./EventListWidget";
-import { NavBar } from "./NavBar";
 import { PredicationWidget } from "./PredictionWidget";
-import { TabBar } from "./TabBar";
 
 export class AppHome {
   private element: HTMLElement;

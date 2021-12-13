@@ -4,7 +4,7 @@ export let rpc = async (
   method: string,
   params: any = undefined
 ): Promise<RpcResponse> => {
-  let response = await fetch("/api", {
+  let response = await fetch("/.netlify/functions/api", {
     method: "POST",
     body: JSON.stringify({
       id: -1,

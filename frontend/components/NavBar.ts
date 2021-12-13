@@ -1,4 +1,4 @@
-import { email } from "../app";
+import { email$ } from "../state/state";
 
 export class NavBar {
   private element: HTMLElement;
@@ -44,7 +44,7 @@ export class NavBar {
     userDropdownLink.setAttribute("role", "button");
     userDropdownLink.setAttribute("data-bs-toggle", "dropdown");
     userDropdownLink.setAttribute("aria-expanded", "false");
-    userDropdownLink.innerText = email ?? "Logged out";
+    userDropdownLink.innerText = email$.value;
 
     let userDropdownMenu = document.createElement("ul");
     userDropdownMenu.className = "dropdown-menu dropdown-menu-end";

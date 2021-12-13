@@ -1,6 +1,6 @@
 import { EventData } from "../../data/Event";
 import { localDb } from "../state/initRxdb";
-import { submitUpsertForm$, upsertEventData$ } from "../state/state";
+import { email$, submitUpsertForm$, upsertEventData$ } from "../state/state";
 
 class UpsertFormInput {
   private element: HTMLElement;
@@ -102,6 +102,7 @@ export class UpsertEventForm {
           date: dateInput.value,
           time: timeInput.value,
           description: descriptionInput.value,
+          email: email$.value,
         });
       } catch (err) {
         console.log("Error upserting event.");

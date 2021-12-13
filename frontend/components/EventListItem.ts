@@ -1,5 +1,4 @@
 import { EventData } from "../../data/Event";
-import { upsertEventModal } from "../app";
 import { localDb } from "../state/initRxdb";
 import { setUpsertEventData } from "../state/state";
 
