@@ -22,7 +22,16 @@
     "url": "https://github.com/mwpb/cyclex/issues"
   },
   "homepage": "https://github.com/mwpb/cyclex#readme",
-  "devDependencies": {
+  "dependencies": {
+    "@netlify/functions": "^0.10.0",
+    "@popperjs/core": "^2.11.0",
+    "@types/cookie": "^0.4.1",
+    "@types/uuid": "^8.3.3",
+    "cookie": "^0.4.1",
+    "faunadb": "^4.4.1",
+    "moment": "^2.29.1",
+    "runtypes": "^6.5.0",
+    "uuid": "^8.3.2",
     "@types/bootstrap": "^5.1.6",
     "@types/js-cookie": "^3.0.1",
     "@types/mithril": "^2.0.8",
@@ -50,16 +59,5 @@
     "workbox-expiration": "^6.4.2",
     "workbox-routing": "^6.4.2",
     "workbox-strategies": "^6.4.2"
-  },
-  "dependencies": {
-    "@netlify/functions": "^0.10.0",
-    "@popperjs/core": "^2.11.0",
-    "@types/cookie": "^0.4.1",
-    "@types/uuid": "^8.3.3",
-    "cookie": "^0.4.1",
-    "faunadb": "^4.4.1",
-    "moment": "^2.29.1",
-    "runtypes": "^6.5.0",
-    "uuid": "^8.3.2"
   }
 }
