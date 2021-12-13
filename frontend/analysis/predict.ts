@@ -1,8 +1,8 @@
 import moment from "moment";
 import { EventData } from "../../data/Event";
-import { localDb } from "../state/initRxdb";
+import { meanGap$ } from "../state/state";
 
-export let predictNext = (events: EventData[]): [string, string] => {
+export let predictNext = (events: EventData[]): moment.Moment => {
   let gaps: number[] = [];
   let format = "YYYY-MM-DDTHH:mm";
 
@@ -21,6 +21,8 @@ export let predictNext = (events: EventData[]): [string, string] => {
     mean = 1000 * 60 * 60 * 24 * 28;
   }
 
+  meanGap$.next(mean);
+
   let lastEvent = events[events.length - 1];
   let lastTs = moment().valueOf();
   if (lastEvent) {
@@ -30,10 +32,5 @@ export let predictNext = (events: EventData[]): [string, string] => {
   let predictedTs = lastTs + mean;
   let predictedMoment = moment(predictedTs);
 
-  console.log(gaps);
-
-  return [
-    predictedMoment.format("YYYY-MM-DD"),
-    predictedMoment.format("HH:mm"),
-  ];
+  return predictedMoment;
 };

@@ -20,7 +20,7 @@ export class EventListItem {
     let editButton = document.createElement("button");
     editButton.type = "button";
     editButton.className = "btn btn-primary";
-    editButton.innerText = "Edit event";
+    editButton.innerText = "Edit";
 
     // let deleteButton = document.createElement("button");
     // deleteButton.className = "btn";

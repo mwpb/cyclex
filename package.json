@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mwpb/cyclex#readme",
   "devDependencies": {
     "@types/bootstrap": "^5.1.6",
+    "@types/js-cookie": "^3.0.1",
     "@types/mithril": "^2.0.8",
     "@types/netlify-identity-widget": "^1.9.2",
     "@types/pouchdb-adapter-idb": "^6.1.4",
@@ -32,6 +33,7 @@
     "css-loader": "^6.5.1",
     "events": "^3.3.0",
     "file-loader": "^6.2.0",
+    "js-cookie": "^3.0.1",
     "mithril": "^2.0.4",
     "netlify-identity-widget": "^1.9.2",
     "pouchdb-adapter-idb": "^7.2.2",
@@ -52,7 +54,10 @@
   "dependencies": {
     "@netlify/functions": "^0.10.0",
     "@popperjs/core": "^2.11.0",
+    "@types/cookie": "^0.4.1",
     "@types/uuid": "^8.3.3",
+    "cookie": "^0.4.1",
+    "faunadb": "^4.4.1",
     "moment": "^2.29.1",
     "runtypes": "^6.5.0",
     "uuid": "^8.3.2"
