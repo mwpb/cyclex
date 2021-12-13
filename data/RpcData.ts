@@ -9,6 +9,7 @@ import {
 } from "runtypes";
 
 export const rpcResultSchema = Record({
+  error: Literal(undefined),
   jsonrpc: Literal("2.0"),
   result: Unknown,
   id: Literal(-1),
@@ -58,6 +59,7 @@ export let serverError = (message: string, data = undefined) => {
 
 export let createResult = (result: any): RpcResult => {
   return {
+    error: undefined,
     jsonrpc: "2.0",
     result: result,
     id: -1,
