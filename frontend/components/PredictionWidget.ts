@@ -1,7 +1,8 @@
 import { newEvent } from "../../data/Event";
 import { predictNext } from "../analysis/predict";
-import { localDb } from "../state/initRxdb";
 import { email$, meanGap$, setUpsertEventData } from "../state/state";
+import { liveQuery } from "dexie";
+import { localDb } from "../state/dexie";
 
 export class PredicationWidget {
   private element: HTMLElement;
@@ -69,13 +70,12 @@ export class PredicationWidget {
 
     // Subscriptions
 
-    localDb.events
-      .find()
-      .sort("date")
-      .$.subscribe((events) => {
-        let next = predictNext(events);
-        nextText.innerText = next.format("dddd, MMMM Do YYYY");
-      });
+    liveQuery(() =>
+      localDb.events.where({ email: email$.value }).sortBy("date")
+    ).subscribe((events) => {
+      let next = predictNext(events);
+      nextText.innerText = next.format("dddd, MMMM Do YYYY");
+    });
 
     meanGap$.subscribe((mean) => {
       let days = (mean / 1000 / 60 / 60 / 24).toFixed(1);

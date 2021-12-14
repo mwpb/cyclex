@@ -9,6 +9,7 @@ import {
   RpcResponse,
   serverError,
 } from "../data/RpcData";
+import { getEvents } from "./apiFunctions/getEvents";
 import { setEvents } from "./apiFunctions/setEvents";
 import { authenticate } from "./utils/authenticate";
 import { faunaSecret } from "./utils/variables";
@@ -18,7 +19,7 @@ const handler: Handler = async (event, context) => {
     secret: faunaSecret,
   });
 
-  let email = authenticate(client, event);
+  let email = await authenticate(client, event);
   if (!email) return apiRepsonse(serverError("Invalid credentials"));
 
   let rpcRequest;
@@ -33,11 +34,13 @@ const handler: Handler = async (event, context) => {
   if (rpcRequest.method === "setEvents") {
     try {
       let events = Array(eventDataSchema).check(rpcRequest.params);
-      rpcResponse = await setEvents(client, events);
+      rpcResponse = await setEvents(client, email, events);
     } catch (err) {
       console.log(err);
       return apiRepsonse(createError(-32602, "Invalid params"));
     }
+  } else if (rpcRequest.method === "getEvents") {
+    rpcResponse = await getEvents(client, email);
   } else {
     return apiRepsonse(createError(-32601, "Method not found"));
   }

@@ -5,11 +5,16 @@ import { query as q } from "faunadb";
 
 export let setEvents = async (
   client: Client,
+  email: string,
   events: EventData[]
 ): Promise<RpcResponse> => {
   let successCount = 0;
   let unmodifiedCount = 0;
   for (let event of events) {
+    if (event.email !== email) {
+      console.log(`${email} trying to set event for ${event.email}`);
+      continue;
+    }
     let matcher = q.Match(q.Index("events_by_email_and_created_at"), [
       event.email,
       event.created_at,

@@ -7,13 +7,14 @@ import Cookies from "js-cookie";
 import { NavBar } from "./components/NavBar";
 import { rpc } from "./fetch/rpcUtils";
 import { email$ } from "./state/state";
-import { localDb } from "./state/initRxdb";
+import { localDb } from "./state/dexie";
 (window as any).global = window;
 (window as any).process = {
   env: { DEBUG: undefined },
 };
 
 export let e = Cookies.get("cyclexEmail") ?? "";
+
 if (e === "") {
   window.location.replace("/login.html");
   throw "Not logged in... redirecting...";
@@ -28,4 +29,9 @@ document.body.appendChild(navBar.getElement());
 document.body.appendChild(appHome.getElement());
 document.body.appendChild(upsertEventModal.getElement());
 
-await rpc("setEvents", await localDb.events.find().exec());
+await rpc(
+  "setEvents",
+  await localDb.events.where({ email: email$.value }).toArray()
+);
+let response = rpc("getEvents");
+console.log(response);

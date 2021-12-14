@@ -14,6 +14,10 @@ export let rpc = async (
     }),
   });
 
-  let res = rpcResponseSchema.check(response);
+  let json = await response.json();
+
+  console.log(json);
+  
+  let res = rpcResponseSchema.check(json);
   return res;
 };

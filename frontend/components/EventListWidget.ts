@@ -1,7 +1,7 @@
-import { newEvent } from "../../data/Event";
-import { localDb } from "../state/initRxdb";
+import { localDb } from "../state/dexie";
+import { email$ } from "../state/state";
 import { EventListItem } from "./EventListItem";
-import { PredicationWidget } from "./PredictionWidget";
+import { liveQuery } from "dexie";
 
 export class EventListWidget {
   private element: HTMLElement;
@@ -51,18 +51,17 @@ export class EventListWidget {
     element.appendChild(accordianItem);
 
     // Subscriptions
-    localDb.events
-      .find()
-      .sort("date")
-      .$.subscribe((events) => {
-        list.innerHTML = "";
-        if (events.length === 0) {
-          list.innerText = "No events entered.";
-        }
-        for (let event of events) {
-          list.appendChild(new EventListItem(event).getElement());
-        }
-      });
+    liveQuery(() =>
+      localDb.events.where({ email: email$.value }).sortBy("date")
+    ).subscribe((events) => {
+      list.innerHTML = "";
+      if (events.length === 0) {
+        list.innerText = "No events entered.";
+      }
+      for (let event of events) {
+        list.appendChild(new EventListItem(event).getElement());
+      }
+    });
 
     this.element = element;
   }

@@ -5,7 +5,7 @@ export let eventDataSchema = Record({
   date: String,
   time: String,
   updated_at: Number,
-  created_at: String,
+  created_at: Number,
   description: String,
   email: String,
 });
@@ -17,7 +17,7 @@ export let newEvent = (email: string): EventData => {
   return {
     date: now.format("YYYY-MM-DD"),
     time: now.format("HH:mm"),
-    created_at: Date.now().toString(),
+    created_at: Date.now(),
     updated_at: Date.now(),
     description: "Normal",
     email: email,

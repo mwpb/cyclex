@@ -32,6 +32,7 @@ const handler: Handler = async (event, context) => {
       secure: isProd,
       httpOnly: true,
       sameSite: "strict",
+      path: "/",
     });
   } catch (err) {
     console.log(err);
@@ -43,6 +44,7 @@ const handler: Handler = async (event, context) => {
     secure: isProd,
     httpOnly: false,
     sameSite: true,
+    path: "/",
   });
 
   return {

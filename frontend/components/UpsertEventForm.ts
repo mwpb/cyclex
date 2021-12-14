@@ -1,5 +1,5 @@
 import { EventData } from "../../data/Event";
-import { localDb } from "../state/initRxdb";
+import { localDb } from "../state/dexie";
 import { email$, submitUpsertForm$, upsertEventData$ } from "../state/state";
 
 class UpsertFormInput {
@@ -90,24 +90,14 @@ export class UpsertEventForm {
 
       feedbackDiv.innerText = "";
 
-      if (!localDb) {
-        feedbackDiv.innerText = "Could not connect to database.";
-        return;
-      }
-
-      try {
-        await localDb.events.upsert({
-          created_at: upsertEventData$.value.created_at,
-          updated_at: Date.now(),
-          date: dateInput.value,
-          time: timeInput.value,
-          description: descriptionInput.value,
-          email: email$.value,
-        });
-      } catch (err) {
-        console.log("Error upserting event.");
-        console.log(err);
-      }
+      await localDb.events.put({
+        created_at: upsertEventData$.value.created_at,
+        updated_at: Date.now(),
+        date: dateInput.value,
+        time: timeInput.value,
+        description: descriptionInput.value,
+        email: email$.value,
+      });
     });
 
     this.element = element;

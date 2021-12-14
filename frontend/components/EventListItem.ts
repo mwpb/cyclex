@@ -1,5 +1,5 @@
 import { EventData } from "../../data/Event";
-import { localDb } from "../state/initRxdb";
+import { localDb } from "../state/dexie";
 import { setUpsertEventData } from "../state/state";
 
 export class EventListItem {
@@ -55,7 +55,7 @@ export class EventListItem {
         `Are you sure you want to delete the event on ${event.date} ${event.time}?`
       );
       if (confirmed) {
-        await localDb.events.findOne(event.created_at).remove();
+        await localDb.events.delete(event.created_at);
       }
     };
 

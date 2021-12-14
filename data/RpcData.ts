@@ -11,7 +11,7 @@ import {
 } from "runtypes";
 
 export const rpcResultSchema = Record({
-  error: Literal(undefined),
+  error: Optional(Literal(undefined)),
   jsonrpc: Literal("2.0"),
   result: Unknown,
   id: Literal(-1),
