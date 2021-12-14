@@ -3,6 +3,7 @@ import { predictNext } from "../analysis/predict";
 import { email$, meanGap$, setUpsertEventData } from "../state/state";
 import { liveQuery } from "dexie";
 import { localDb } from "../state/dexie";
+import { formatCyclexDate } from "../../data/CyclexDate";
 
 export class PredicationWidget {
   private element: HTMLElement;
@@ -74,7 +75,7 @@ export class PredicationWidget {
       localDb.events.where({ email: email$.value }).sortBy("date")
     ).subscribe((events) => {
       let next = predictNext(events);
-      nextText.innerText = next.format("dddd, MMMM Do YYYY");
+      nextText.innerText = formatCyclexDate(next);
     });
 
     meanGap$.subscribe((mean) => {

@@ -1,22 +1,18 @@
 import { Record, String, Static, Number } from "runtypes";
-import moment from "moment";
+import { cyclexDateSchema, epochToDate } from "./CyclexDate";
 
 export let eventDataSchema = Record({
-  date: String,
-  time: String,
   updated_at: Number,
   created_at: Number,
   description: String,
   email: String,
-});
+}).And(cyclexDateSchema);
 
 export type EventData = Static<typeof eventDataSchema>;
 
 export let newEvent = (email: string): EventData => {
-  let now = moment();
   return {
-    date: now.format("YYYY-MM-DD"),
-    time: now.format("HH:mm"),
+    ...epochToDate(Date.now()),
     created_at: Date.now(),
     updated_at: Date.now(),
     description: "Normal",

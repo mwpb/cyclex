@@ -1,16 +1,15 @@
-import moment from "moment";
+import { CyclexDate, dateToEpoch, epochToDate } from "../../data/CyclexDate";
 import { EventData } from "../../data/Event";
 import { meanGap$ } from "../state/state";
 
-export let predictNext = (events: EventData[]): moment.Moment => {
+export let predictNext = (events: EventData[]): CyclexDate => {
   let gaps: number[] = [];
-  let format = "YYYY-MM-DDTHH:mm";
 
   for (let i = 0; i < events.length - 1; i++) {
     let event1 = events[i];
     let event2 = events[i + 1];
-    let ts1 = moment(`${event1.date}T${event1.time}`, format).valueOf();
-    let ts2 = moment(`${event2.date}T${event2.time}`, format).valueOf();
+    let ts1 = dateToEpoch(event1);
+    let ts2 = dateToEpoch(event2);
     gaps.push(ts2 - ts1);
   }
 
@@ -24,13 +23,11 @@ export let predictNext = (events: EventData[]): moment.Moment => {
   meanGap$.next(mean);
 
   let lastEvent = events[events.length - 1];
-  let lastTs = moment().valueOf();
+  let lastTs = Date.now();
   if (lastEvent) {
-    lastTs = moment(`${lastEvent.date}T${lastEvent.time}`, format).valueOf();
+    lastTs = dateToEpoch(lastEvent);
   }
 
   let predictedTs = lastTs + mean;
-  let predictedMoment = moment(predictedTs);
-
-  return predictedMoment;
+  return epochToDate(predictedTs);
 };

@@ -1,3 +1,4 @@
+import { formatCyclexDate } from "../../data/CyclexDate";
 import { EventData } from "../../data/Event";
 import { localDb } from "../state/dexie";
 import { setUpsertEventData } from "../state/state";
@@ -11,7 +12,7 @@ export class EventListItem {
       "list-group-item d-flex align-items-center p-3 justify-content-between";
 
     let summary = document.createElement("div");
-    summary.innerText = `${event.date} ${event.time} (${event.description})`;
+    summary.innerText = `${formatCyclexDate(event)} (${event.description})`;
 
     let leftDiv = document.createElement("div");
     leftDiv.className = "d-flex align-items-center";
@@ -52,7 +53,9 @@ export class EventListItem {
 
     deleteButton.onclick = async () => {
       let confirmed = window.confirm(
-        `Are you sure you want to delete the event on ${event.date} ${event.time}?`
+        `Are you sure you want to delete the event on ${formatCyclexDate(
+          event
+        )}?`
       );
       if (confirmed) {
         await localDb.events.delete(event.created_at);

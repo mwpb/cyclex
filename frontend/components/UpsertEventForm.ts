@@ -79,8 +79,8 @@ export class UpsertEventForm {
 
     // Subscriptions
     upsertEventData$.subscribe((event: EventData) => {
-      dateInput.value = event.date;
-      timeInput.value = event.time;
+      dateInput.value = `${event.year}-${event.month}-${event.day}`;
+      timeInput.value = `${event.hour}:${event.minute}`;
       descriptionInput.value = event.description;
     });
 
@@ -93,8 +93,11 @@ export class UpsertEventForm {
       await localDb.events.put({
         created_at: upsertEventData$.value.created_at,
         updated_at: Date.now(),
-        date: dateInput.value,
-        time: timeInput.value,
+        year: Number.parseInt(dateInput.value.split("-")[0]),
+        month: Number.parseInt(dateInput.value.split("-")[1]),
+        day: Number.parseInt(dateInput.value.split("-")[2]),
+        hour: Number.parseInt(dateInput.value.split("T")[0]),
+        minute: Number.parseInt(dateInput.value.split("T")[1]),
         description: descriptionInput.value,
         email: email$.value,
       });
