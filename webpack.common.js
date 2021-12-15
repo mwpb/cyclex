@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-// const BundleAnalyzerPlugin =
-//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   experiments: {
@@ -36,6 +36,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
 };

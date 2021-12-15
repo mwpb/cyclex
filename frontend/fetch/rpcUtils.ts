@@ -14,10 +14,5 @@ export let rpc = async (
     }),
   });
 
-  let json = await response.json();
-
-  console.log(json);
-  
-  let res = rpcResponseSchema.check(json);
-  return res;
+  return rpcResponseSchema.check(await response.json());
 };

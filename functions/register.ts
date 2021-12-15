@@ -31,8 +31,6 @@ const handler: Handler = async (event, context) => {
         },
       })
     );
-
-    console.log(o);
   } catch (err) {
     throw "User already exists";
   }

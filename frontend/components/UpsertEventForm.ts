@@ -1,3 +1,4 @@
+import { cyclexDateToDate, cyclexDateToTime } from "../../data/CyclexDate";
 import { EventData } from "../../data/Event";
 import { localDb } from "../state/dexie";
 import { email$, submitUpsertForm$, upsertEventData$ } from "../state/state";
@@ -79,15 +80,13 @@ export class UpsertEventForm {
 
     // Subscriptions
     upsertEventData$.subscribe((event: EventData) => {
-      dateInput.value = `${event.year}-${event.month}-${event.day}`;
-      timeInput.value = `${event.hour}:${event.minute}`;
+      dateInput.value = cyclexDateToDate(event);
+      timeInput.value = cyclexDateToTime(event);
       descriptionInput.value = event.description;
     });
 
     submitUpsertForm$.subscribe(async (doSumbit) => {
       if (!doSumbit) return;
-      console.log("submitting");
-
       feedbackDiv.innerText = "";
 
       await localDb.events.put({
@@ -96,8 +95,8 @@ export class UpsertEventForm {
         year: Number.parseInt(dateInput.value.split("-")[0]),
         month: Number.parseInt(dateInput.value.split("-")[1]),
         day: Number.parseInt(dateInput.value.split("-")[2]),
-        hour: Number.parseInt(dateInput.value.split("T")[0]),
-        minute: Number.parseInt(dateInput.value.split("T")[1]),
+        hour: Number.parseInt(timeInput.value.split(":")[0]),
+        minute: Number.parseInt(timeInput.value.split(":")[1]),
         description: descriptionInput.value,
         email: email$.value,
       });

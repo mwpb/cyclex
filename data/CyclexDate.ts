@@ -28,13 +28,26 @@ export let epochToDate = (millis: number): CyclexDate => {
   let date: Date = new Date(millis);
   return {
     year: date.getFullYear(),
-    month: date.getMonth(),
-    day: date.getDay(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
     hour: date.getHours(),
     minute: date.getMinutes(),
   };
 };
 
+export let cyclexDateToDate = (d: CyclexDate): string => {
+  let year = String(d.year).padStart(4, "0");
+  let month = String(d.month).padStart(2, "0");
+  let day = String(d.day).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export let cyclexDateToTime = (d: CyclexDate): string => {
+  let hour = String(d.hour).padStart(2, "0");
+  let minute = String(d.minute).padStart(2, "0");
+  return `${hour}:${minute}`;
+};
+
 export let formatCyclexDate = (d: CyclexDate): string => {
-  return `${d.year}-${d.month}-${d.day} ${d.hour}:${d.minute}`;
+  return `${cyclexDateToDate(d)} ${cyclexDateToTime(d)}`;
 };

@@ -1,7 +1,6 @@
 import { AppHome } from "./components/AppHome";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { UpsertEventModal } from "./components/UpsertEventModal";
 import Cookies from "js-cookie";
 import { NavBar } from "./components/NavBar";
