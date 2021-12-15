@@ -26,7 +26,7 @@ export class EventListWidget {
     accordionButton.setAttribute("data-bs-target", "#collapseOne");
     accordionButton.setAttribute("aria-expanded", "false");
     accordionButton.setAttribute("aria-controls", "collapseOne");
-    accordionButton.className = "accordion-button";
+    accordionButton.className = "accordion-button collapsed";
     accordionButton.innerText = "Previous events";
 
     let accordionCollapse = document.createElement("div");
