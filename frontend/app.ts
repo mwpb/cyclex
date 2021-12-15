@@ -27,10 +27,3 @@ export let upsertEventModal = new UpsertEventModal();
 document.body.appendChild(navBar.getElement());
 document.body.appendChild(appHome.getElement());
 document.body.appendChild(upsertEventModal.getElement());
-
-await rpc(
-  "setEvents",
-  await localDb.events.where({ email: email$.value }).toArray()
-);
-let response = rpc("getEvents");
-console.log(response);

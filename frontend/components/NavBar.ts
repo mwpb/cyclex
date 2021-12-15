@@ -1,4 +1,5 @@
 import { email$ } from "../state/state";
+import { syncWithServer } from "../sync";
 
 export class NavBar {
   private element: HTMLElement;
@@ -50,15 +51,19 @@ export class NavBar {
     userDropdownMenu.className = "dropdown-menu dropdown-menu-end";
     userDropdownMenu.setAttribute("aria-labelledby", "navbarDropdown");
 
+    let syncButton = document.createElement("button");
+    syncButton.innerText = "Sync";
+    syncButton.className = "dropdown-item";
+
     let logoutItem = document.createElement("li");
     let logoutLink = document.createElement("a");
     logoutLink.className = "dropdown-item";
     logoutLink.innerText = "Logout";
     logoutLink.href = "/logout";
 
-    // toggleButton.appendChild(togglerIcon);
-
+    // Structure
     logoutItem.appendChild(logoutLink);
+    userDropdownMenu.appendChild(syncButton);
     userDropdownMenu.appendChild(logoutItem);
 
     userDropdownContainer.appendChild(userDropdownLink);
@@ -69,10 +74,23 @@ export class NavBar {
     content.appendChild(list);
 
     container.appendChild(brand);
-    // container.appendChild(toggleButton);
     container.appendChild(content);
 
     element.appendChild(container);
+
+    // Events
+
+    syncButton.onclick = async () => {
+      syncButton.innerText = "Syncing...";
+      try {
+        await syncWithServer(email$.value);
+      } catch (err) {
+        console.log("Error syncing with server.");
+        console.log(err);
+      }
+      syncButton.innerText = "Sync";
+    };
+
     this.element = element;
   }
 

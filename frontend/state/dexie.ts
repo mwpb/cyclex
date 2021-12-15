@@ -1,5 +1,6 @@
 import Dexie from "dexie";
 import { EventData } from "../../data/Event";
+import { rpc } from "../fetch/rpcUtils";
 
 export class LocalDb extends Dexie {
   events!: Dexie.Table<EventData, number>;

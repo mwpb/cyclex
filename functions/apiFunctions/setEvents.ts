@@ -35,7 +35,7 @@ export let setEvents = async (
       await client.query(
         q.If(
           q.Exists(matcher),
-          q.Update(matcher, { data: event }),
+          q.Update(q.Select(["ref"], q.Get(matcher)), { data: event }),
           q.Create(q.Collection("eventData"), { data: event })
         )
       );
