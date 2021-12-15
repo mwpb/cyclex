@@ -56,7 +56,7 @@ export class EventListWidget {
       async (events) => {
         let evs = await events.toArray();
         evs = evs.sort(function (a, b) {
-          return dateToEpoch(a) - dateToEpoch(b);
+          return dateToEpoch(b) - dateToEpoch(a);
         });
         list.innerHTML = "";
         if (evs.length === 0) {

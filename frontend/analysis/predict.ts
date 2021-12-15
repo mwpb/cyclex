@@ -28,6 +28,10 @@ export let predictNext = (events: EventData[]): CyclexDate => {
     lastTs = dateToEpoch(lastEvent);
   }
 
+  console.log(lastTs);
+  
+
   let predictedTs = lastTs + mean;
+  
   return epochToDate(predictedTs);
 };

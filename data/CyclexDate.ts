@@ -13,7 +13,7 @@ export type CyclexDate = Static<typeof cyclexDateSchema>;
 export let dateToEpoch = (cyclexDate: CyclexDate): number => {
   let date: Date = new Date(
     cyclexDate.year,
-    cyclexDate.month,
+    cyclexDate.month - 1,
     cyclexDate.day,
     cyclexDate.hour,
     cyclexDate.minute,
