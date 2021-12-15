@@ -1,4 +1,4 @@
-import * as b from "bootstrap";
+import Modal from "bootstrap/js/dist/modal";
 import {
   showUpsertEvent$,
   submitUpsertForm$,
@@ -61,7 +61,7 @@ export class UpsertEventModal {
     element.appendChild(dialog);
 
     // Events
-    let modal = new b.Modal(element);
+    let modal = new Modal(element);
     submitButton.onclick = async () => {
       submitUpsertForm$.next(true);
       modal.hide();

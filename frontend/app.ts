@@ -1,16 +1,8 @@
 import { AppHome } from "./components/AppHome";
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { UpsertEventModal } from "./components/UpsertEventModal";
 import Cookies from "js-cookie";
 import { NavBar } from "./components/NavBar";
-import { rpc } from "./fetch/rpcUtils";
 import { email$ } from "./state/state";
-import { localDb } from "./state/dexie";
-(window as any).global = window;
-(window as any).process = {
-  env: { DEBUG: undefined },
-};
 
 export let e = Cookies.get("cyclexEmail") ?? "";
 
