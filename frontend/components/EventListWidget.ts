@@ -2,6 +2,7 @@ import { localDb } from "../state/dexie";
 import { email$ } from "../state/state";
 import { EventListItem } from "./EventListItem";
 import { liveQuery } from "dexie";
+import { dateToEpoch } from "../../data/CyclexDate";
 
 export class EventListWidget {
   private element: HTMLElement;
@@ -51,17 +52,21 @@ export class EventListWidget {
     element.appendChild(accordianItem);
 
     // Subscriptions
-    liveQuery(() =>
-      localDb.events.where({ email: email$.value }).sortBy("date")
-    ).subscribe((events) => {
-      list.innerHTML = "";
-      if (events.length === 0) {
-        list.innerText = "No events entered.";
+    liveQuery(() => localDb.events.where({ email: email$.value })).subscribe(
+      async (events) => {
+        let evs = await events.toArray();
+        evs = evs.sort(function (a, b) {
+          return dateToEpoch(a) - dateToEpoch(b);
+        });
+        list.innerHTML = "";
+        if (evs.length === 0) {
+          list.innerText = "No events entered.";
+        }
+        for (let event of evs) {
+          list.appendChild(new EventListItem(event).getElement());
+        }
       }
-      for (let event of events) {
-        list.appendChild(new EventListItem(event).getElement());
-      }
-    });
+    );
 
     this.element = element;
   }

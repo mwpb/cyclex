@@ -3,7 +3,7 @@ import { predictNext } from "../analysis/predict";
 import { email$, meanGap$, setUpsertEventData } from "../state/state";
 import { liveQuery } from "dexie";
 import { localDb } from "../state/dexie";
-import { formatCyclexDate } from "../../data/CyclexDate";
+import { dateToEpoch, formatCyclexDate } from "../../data/CyclexDate";
 
 export class PredicationWidget {
   private element: HTMLElement;
@@ -71,12 +71,19 @@ export class PredicationWidget {
 
     // Subscriptions
 
-    liveQuery(() =>
-      localDb.events.where({ email: email$.value }).sortBy("date")
-    ).subscribe((events) => {
-      let next = predictNext(events);
-      nextText.innerText = formatCyclexDate(next);
-    });
+    liveQuery(() => localDb.events.where({ email: email$.value })).subscribe(
+      async (events) => {
+        let evs = await events.toArray();
+        evs = evs.sort(function (a, b) {
+          return dateToEpoch(a) - dateToEpoch(b);
+        });
+
+        console.log(evs.map((x) => formatCyclexDate(x)));
+
+        let next = predictNext(evs);
+        nextText.innerText = formatCyclexDate(next);
+      }
+    );
 
     meanGap$.subscribe((mean) => {
       let days = (mean / 1000 / 60 / 60 / 24).toFixed(1);
