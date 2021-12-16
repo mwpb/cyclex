@@ -32,7 +32,7 @@ const handler: Handler = async (event, context) => {
     let token = randomBytes(64).toString("hex");
     await client.query(
       q.Create(q.Collection("sessions"), {
-        data: { email: details.email, token: token },
+        data: { email: details.email, token: token, iat: Date.now() },
       })
     );
 
