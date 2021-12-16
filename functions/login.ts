@@ -4,6 +4,7 @@ import { loginSchema } from "../data/Forms";
 import faunadb from "faunadb";
 import { faunaSecret } from "./utils/variables";
 import cookie from "cookie";
+import { randomBytes } from "crypto";
 
 const handler: Handler = async (event, context) => {
   let details;
@@ -28,7 +29,14 @@ const handler: Handler = async (event, context) => {
       })
     );
 
-    oatCookie = cookie.serialize("cyclexOat", o.secret, {
+    let token = randomBytes(64).toString("hex");
+    await client.query(
+      q.Create(q.Collection("sessions"), {
+        data: { email: details.email, token: token },
+      })
+    );
+
+    oatCookie = cookie.serialize("cyclexOat", token, {
       secure: isProd,
       httpOnly: true,
       sameSite: "strict",

@@ -5,6 +5,8 @@ import { meanGap$ } from "../state/state";
 export let predictNext = (events: EventData[]): CyclexDate => {
   let gaps: number[] = [];
 
+  events = events.filter((x) => !x.deleted);
+
   for (let i = 0; i < events.length - 1; i++) {
     let event1 = events[i];
     let event2 = events[i + 1];
@@ -28,10 +30,9 @@ export let predictNext = (events: EventData[]): CyclexDate => {
     lastTs = dateToEpoch(lastEvent);
   }
 
-  console.log(lastTs);
-  
+  // console.log(lastTs);
 
   let predictedTs = lastTs + mean;
-  
+
   return epochToDate(predictedTs);
 };

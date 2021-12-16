@@ -59,7 +59,7 @@ export class NavBar {
     let logoutLink = document.createElement("a");
     logoutLink.className = "dropdown-item";
     logoutLink.innerText = "Logout";
-    logoutLink.href = "/logout";
+    logoutLink.href = "/.netlify/functions/logout";
 
     // Structure
     logoutItem.appendChild(logoutLink);

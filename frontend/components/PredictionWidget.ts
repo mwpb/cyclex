@@ -71,19 +71,18 @@ export class PredicationWidget {
 
     // Subscriptions
 
-    liveQuery(() => localDb.events.where({ email: email$.value })).subscribe(
-      async (events) => {
-        let evs = await events.toArray();
-        evs = evs.sort(function (a, b) {
-          return dateToEpoch(a) - dateToEpoch(b);
-        });
+    liveQuery(() =>
+      localDb.events.where({ email: email$.value }).toArray()
+    ).subscribe(async (events) => {
+      let evs = events.sort(function (a, b) {
+        return dateToEpoch(a) - dateToEpoch(b);
+      });
 
-        console.log(evs.map((x) => formatCyclexDate(x)));
+      // console.log(evs.map((x) => formatCyclexDate(x)));
 
-        let next = predictNext(evs);
-        nextText.innerText = formatCyclexDate(next);
-      }
-    );
+      let next = predictNext(evs);
+      nextText.innerText = formatCyclexDate(next);
+    });
 
     meanGap$.subscribe((mean) => {
       let days = (mean / 1000 / 60 / 60 / 24).toFixed(1);

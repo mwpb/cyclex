@@ -1,4 +1,4 @@
-import { Record, String, Static, Number } from "runtypes";
+import { Record, String, Static, Number, Optional, Boolean } from "runtypes";
 import { cyclexDateSchema, epochToDate } from "./CyclexDate";
 
 export let eventDataSchema = Record({
@@ -6,6 +6,7 @@ export let eventDataSchema = Record({
   created_at: Number,
   description: String,
   email: String,
+  deleted: Optional(Boolean),
 }).And(cyclexDateSchema);
 
 export type EventData = Static<typeof eventDataSchema>;

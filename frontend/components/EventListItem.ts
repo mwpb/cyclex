@@ -62,7 +62,9 @@ export class EventListItem {
         )}?`
       );
       if (confirmed) {
-        await localDb.events.delete(event.created_at);
+        event.deleted = true;
+        event.updated_at = Date.now();
+        await localDb.events.put(event);
       }
     };
 

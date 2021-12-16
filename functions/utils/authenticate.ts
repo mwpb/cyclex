@@ -14,9 +14,10 @@ export let authenticate = async (
   let oat = cookies.cyclexOat;
   let requestEmail = cookies.cyclexEmail;
   try {
-    let o = (await client.query(q.KeyFromSecret(cookies.cyclexOat))) as any;
-    let user = (await client.query(q.Get(o.instance))) as any;
-    let oatEmail = user.data.email;
+    let o = (await client.query(
+      q.Get(q.Match("sessions_by_token", oat))
+    )) as any;
+    let oatEmail = o.data.email;
 
     if (oatEmail !== requestEmail) return null;
     return oatEmail;

@@ -52,21 +52,23 @@ export class EventListWidget {
     element.appendChild(accordianItem);
 
     // Subscriptions
-    liveQuery(() => localDb.events.where({ email: email$.value })).subscribe(
-      async (events) => {
-        let evs = await events.toArray();
-        evs = evs.sort(function (a, b) {
-          return dateToEpoch(b) - dateToEpoch(a);
-        });
-        list.innerHTML = "";
-        if (evs.length === 0) {
-          list.innerText = "No events entered.";
-        }
-        for (let event of evs) {
-          list.appendChild(new EventListItem(event).getElement());
-        }
+    liveQuery(() =>
+      localDb.events.where({ email: email$.value }).toArray()
+    ).subscribe(async (events) => {
+      // console.log(events);
+      
+      let evs = events.sort(function (a, b) {
+        return dateToEpoch(b) - dateToEpoch(a);
+      });
+      evs = evs.filter((x) => !x.deleted);
+      list.innerHTML = "";
+      if (evs.length === 0) {
+        list.innerText = "No events entered.";
       }
-    );
+      for (let event of evs) {
+        list.appendChild(new EventListItem(event).getElement());
+      }
+    });
 
     this.element = element;
   }
